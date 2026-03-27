@@ -1,10 +1,9 @@
 import os
 import pandas as pd
 import pickle
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 def load_and_preprocess():
-    # path
     base_path = os.path.dirname(__file__)
     file_path = os.path.join(base_path, "..", "car.csv")
     file_path = os.path.abspath(file_path)
@@ -20,14 +19,18 @@ def load_and_preprocess():
     print("Columns:", df.columns)
 
     # ---------------- SPLIT ----------------
-    X = df.drop("target", axis=1)   # ✅ แก้ตรงนี้
+    X = df.drop("target", axis=1)
     y = df["target"]
 
-    # ---------------- ENCODE ----------------
+    # ---------------- ENCODE X ----------------
     X = pd.get_dummies(X)
 
     print("\nAfter encode:")
     print(X.head())
+
+    # ---------------- ENCODE y 🔥 ----------------
+    le = LabelEncoder()
+    y = le.fit_transform(y)
 
     # ---------------- SCALE ----------------
     scaler = StandardScaler()
@@ -37,9 +40,12 @@ def load_and_preprocess():
     save_path = os.path.join(base_path, "preprocessing")
     os.makedirs(save_path, exist_ok=True)
 
+    # save ทุกอย่างที่ต้องใช้ตอน predict
     pickle.dump(scaler, open(os.path.join(save_path, "scaler.pkl"), "wb"))
     pickle.dump(X.columns, open(os.path.join(save_path, "columns.pkl"), "wb"))
+    pickle.dump(le, open(os.path.join(save_path, "label_encoder.pkl"), "wb"))
 
-    print("Saved scaler.pkl and columns.pkl ✅")
+    print("Saved scaler.pkl, columns.pkl, label_encoder.pkl ✅")
 
-    return X, X_scaled, y
+    # ---------------- RETURN ----------------
+    return X, X_scaled, y, scaler

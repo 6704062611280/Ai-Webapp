@@ -1,4 +1,4 @@
-Age,Gender,Resting_BP,Cholesterol,Fasting_Blood_Sugar,Max_Heart_Rate,ECG_Result,Smoking_Status,Alcohol_Consumption,Physical_Activity_Level,Diet_Quality_Score,Sleep_Hours,BMI,Diabetes,Hypertension,Family_History,Risk_Score,Risk_Level,Heart_Disease
+Age,Gender,Resting_BP,Cholesterol,Fasting_Blood_Sugar,Max_Heart_Rate,ECG_Result,Smoking_Status,Alcohol_Consumption,Physical_Activity_Level,Diet_Quality_Score,Sleep_Hours,BMI,Diabetes,Hypertension,Family_History,Risk_Score,Risk_Level,target
 62,Male,99.894739288952,165.7582729434738,84.16280668115697,163.93671012587427,Normal,Never,2.872267512307377,High,8.79086211387609,4.646629570380414,17.79565288682343,0,1,1,28.09,Low,0
 52,Female,106.77000434046623,214.4389106224072,70.8353668293577,173.40104014147025,Normal,Never,1.0234153311275695,Low,6.667919715575187,4.763241643292924,21.204698528856063,0,0,0,16.27,Low,0
 64,Male,136.69397362365214,183.73309687341782,70.0,159.40448216741126,Normal,Current,1.6325479805922993,Low,5.642528703563716,8.960664163933313,28.986248864416588,0,1,0,43.55,Medium,0
