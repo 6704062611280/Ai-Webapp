@@ -4,7 +4,7 @@ import os
 # 🔥 fix path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from preprocessing.preprocess import load_and_preprocess
+from preprocess import load_and_preprocess
 import tensorflow as tf
 
 # โหลดข้อมูล
@@ -27,6 +27,6 @@ model.compile(
 model.fit(X_scaled, y, epochs=10)
 
 # save model
-model.save("model.h5")
+model.save("../../Backend/models/car/model.h5")
 
 print("✅ model.h5 created!")

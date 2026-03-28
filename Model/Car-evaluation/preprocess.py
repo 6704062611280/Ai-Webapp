@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 def load_and_preprocess():
     base_path = os.path.dirname(__file__)
-    file_path = os.path.join(base_path, "..", "car.csv")
+    file_path = os.path.join(base_path, "car.csv")
     file_path = os.path.abspath(file_path)
 
     print("Loading from:", file_path)
@@ -13,13 +13,15 @@ def load_and_preprocess():
     df = pd.read_csv(file_path)
 
     # ---------------- CLEAN ----------------
+    original_rows = len(df)
     df = df.dropna()
+    print(f"Dropped {original_rows - len(df)} rows due to missing values")
     df.columns = df.columns.str.strip()
 
     print("Columns:", df.columns)
 
     # ---------------- SPLIT ----------------
-    X = df.drop("target", axis=1)
+    X = df[['buying', 'maint', 'doors', 'persons', 'lug_boot', 'safety']]
     y = df["target"]
 
     # ---------------- ENCODE X ----------------
@@ -37,7 +39,7 @@ def load_and_preprocess():
     X_scaled = scaler.fit_transform(X)
 
     # ---------------- SAVE ----------------
-    save_path = os.path.join(base_path, "preprocessing")
+    save_path = os.path.join(base_path, "..", "..", "Backend", "models", "car")
     os.makedirs(save_path, exist_ok=True)
 
     # save ทุกอย่างที่ต้องใช้ตอน predict

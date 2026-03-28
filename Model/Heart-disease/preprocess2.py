@@ -14,12 +14,17 @@ def load_and_preprocess():
     df = pd.read_csv(file_path)
 
     # CLEAN
+    original_rows = len(df)
     df = df.dropna()
+    print(f"Dropped {original_rows - len(df)} rows due to missing values")
     df.columns = df.columns.str.strip()
 
     # SPLIT
     X = df.drop("target", axis=1)
     y = df["target"]
+
+    # Select only the features used in API
+    X = X[['Age', 'Cholesterol', 'Resting_BP']]
 
     # ENCODE
     X = pd.get_dummies(X)
@@ -43,7 +48,7 @@ def save_preprocess():
     y = le.fit_transform(y)
 
     save_dir = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "models")
+    os.path.join(os.path.dirname(__file__), "..", "..", "Backend", "models", "heart")
 )
     os.makedirs(save_dir, exist_ok=True)
 

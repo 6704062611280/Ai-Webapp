@@ -7,4 +7,4 @@ numpy==1.26.4
 python-multipart==0.0.12
 
 # Neural Network (ติดตั้งเฉพาะถ้าใช้ train_nn.py)
-# tensorflow==2.17.0
+tensorflow==2.17.0

@@ -16,7 +16,7 @@ print("🚀 START TRAIN ML2")
 
 # ---------------- LOAD PREPROCESS ----------------
 save_dir = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "models")
+    os.path.join(os.path.dirname(__file__), "..", "..", "..", "Backend", "models", "heart")
 )
 
 scaler = pickle.load(open(os.path.join(save_dir, "scaler.pkl"), "rb"))

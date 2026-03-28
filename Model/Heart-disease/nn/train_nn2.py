@@ -19,11 +19,9 @@ y = le.fit_transform(y)
 
 # ---------------- SAVE PREPROCESS ----------------
 save_dir = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "models")
+    os.path.join(os.path.dirname(__file__), "..", "..", "..", "Backend", "models", "heart")
 )
 os.makedirs(save_dir, exist_ok=True)
-
-print("✅ preprocessing saved")
 
 # ---------------- MODEL ----------------
 model = tf.keras.Sequential([
@@ -43,5 +41,3 @@ model.fit(X_scaled, y, epochs=10)
 
 # ---------------- SAVE ----------------
 model.save(os.path.join(save_dir, "model.h5"))
-
-print("✅ model.h5 created!")
