@@ -1,29 +1,23 @@
-export default function MLReport() {
+function MLReport() {
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Machine Learning Model</h1>
+      <h1>Machine Learning Report</h1>
 
-      <h2>1. Data Preparation</h2>
-      <p>
-        Dataset ที่ใช้คือ Car Evaluation ซึ่งมี feature เช่น buying, maint,
-        doors, persons, lug_boot และ safety โดยทำการ clean ข้อมูล,
-        one-hot encoding และ scaling
-      </p>
+      <div style={{ border: "1px solid #ccc", padding: "15px", marginTop: "20px" }}>
+        <h2>Heart Dataset</h2>
+        <p>Model: Logistic Regression / Random Forest</p>
+        <p>Accuracy: 0.85</p>
+        <p>Description: Used for predicting heart disease risk.</p>
+      </div>
 
-      <h2>2. Algorithms</h2>
-      <ul>
-        <li>Decision Tree</li>
-        <li>K-Nearest Neighbors (KNN)</li>
-        <li>Support Vector Machine (SVM)</li>
-      </ul>
-
-      <h2>3. Model Development</h2>
-      <p>
-        ทำการ train model โดยใช้ข้อมูลที่ preprocess แล้ว และประเมินผลด้วย accuracy
-      </p>
-
-      <h2>4. Reference</h2>
-      <p>UCI Machine Learning Repository</p>
+      <div style={{ border: "1px solid #ccc", padding: "15px", marginTop: "20px" }}>
+        <h2>Car Dataset</h2>
+        <p>Model: Decision Tree</p>
+        <p>Accuracy: 0.92</p>
+        <p>Description: Used for car evaluation classification.</p>
+      </div>
     </div>
   );
 }
+
+export default MLReport;

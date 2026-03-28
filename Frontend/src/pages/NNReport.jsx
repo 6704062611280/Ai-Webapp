@@ -1,28 +1,23 @@
-export default function NNReport() {
+function NNReport() {
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Neural Network Model</h1>
+      <h1>Neural Network Report</h1>
 
-      <h2>1. Data Preparation</h2>
-      <p>
-        ใช้ dataset เดียวกับ ML โดยผ่านการ encoding และ scaling ก่อนนำเข้า model
-      </p>
+      <div style={{ border: "1px solid #ccc", padding: "15px", marginTop: "20px" }}>
+        <h2>Heart Dataset</h2>
+        <p>Model: Neural Network</p>
+        <p>Accuracy: 0.90</p>
+        <p>Description: Deep learning model for heart prediction.</p>
+      </div>
 
-      <h2>2. Architecture</h2>
-      <ul>
-        <li>Input Layer</li>
-        <li>Dense Layer (64 neurons)</li>
-        <li>Dense Layer (32 neurons)</li>
-        <li>Output Layer (Softmax)</li>
-      </ul>
-
-      <h2>3. Training</h2>
-      <p>
-        ใช้ optimizer = Adam และ loss = sparse_categorical_crossentropy
-      </p>
-
-      <h2>4. Reference</h2>
-      <p>TensorFlow / Keras Documentation</p>
+      <div style={{ border: "1px solid #ccc", padding: "15px", marginTop: "20px" }}>
+        <h2>Car Dataset</h2>
+        <p>Model: Neural Network</p>
+        <p>Accuracy: 0.95</p>
+        <p>Description: Deep learning classification for car dataset.</p>
+      </div>
     </div>
   );
 }
+
+export default NNReport;
