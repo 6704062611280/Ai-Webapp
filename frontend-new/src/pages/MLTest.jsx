@@ -1,11 +1,29 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "https://ai-webapp-production.up.railway.app";
+
 function MLTest() {
   const [heartInputs, setHeartInputs] = useState({
     age: 45,
     cholesterol: 200,
-    restingBp: 120
+    restingBp: 120,
+    maxHr: 150,
+    oldpeak: 0,
+    riskScore: 25,
+    fastingBloodSugar: 100,
+    stSlope: 2,
+    stSegment: 1,
+    numMajorVessels: 0,
+    exerciseInducedAngina: 0,
+    smoking: 2,
+    diabetic: 0,
+    familyHistory: 0,
+    sedentaryMinutes: 180,
+    sleepDuration: 7,
+    bmi: 24,
+    alcoholConsumption: 0
   });
+
   const [carInputs, setCarInputs] = useState({
     buying: 2,
     maint: 2,
@@ -14,6 +32,7 @@ function MLTest() {
     lug_boot: 2,
     safety: 3
   });
+
   const [heartResults, setHeartResults] = useState({});
   const [carResults, setCarResults] = useState({});
   const [heartError, setHeartError] = useState(null);
@@ -21,17 +40,87 @@ function MLTest() {
 
   const models = ["knn", "svm", "dt"];
 
+  // Heart Disease Example Presets
+  const healthyExample = () => {
+    setHeartInputs({
+      age: 45,
+      cholesterol: 180,
+      restingBp: 120,
+      maxHr: 150,
+      oldpeak: 0,
+      riskScore: 25,
+      fastingBloodSugar: 100,
+      stSlope: 2,
+      stSegment: 1,
+      numMajorVessels: 0,
+      exerciseInducedAngina: 0,
+      smoking: 2,
+      diabetic: 0,
+      familyHistory: 0,
+      sedentaryMinutes: 180,
+      sleepDuration: 7,
+      bmi: 24,
+      alcoholConsumption: 0
+    });
+  };
+
+  const diseaseExample = () => {
+    setHeartInputs({
+      age: 60,
+      cholesterol: 280,
+      restingBp: 160,
+      maxHr: 100,
+      oldpeak: 2.5,
+      riskScore: 72,
+      fastingBloodSugar: 150,
+      stSlope: 0,
+      stSegment: 0,
+      numMajorVessels: 2,
+      exerciseInducedAngina: 1,
+      smoking: 1,
+      diabetic: 1,
+      familyHistory: 1,
+      sedentaryMinutes: 480,
+      sleepDuration: 5,
+      bmi: 28,
+      alcoholConsumption: 2
+    });
+  };
+
+  const moderateExample = () => {
+    setHeartInputs({
+      age: 50,
+      cholesterol: 200,
+      restingBp: 130,
+      maxHr: 120,
+      oldpeak: 1,
+      riskScore: 55,
+      fastingBloodSugar: 105,
+      stSlope: 1,
+      stSegment: 1,
+      numMajorVessels: 1,
+      exerciseInducedAngina: 0,
+      smoking: 0,
+      diabetic: 0,
+      familyHistory: 1,
+      sedentaryMinutes: 300,
+      sleepDuration: 6,
+      bmi: 26,
+      alcoholConsumption: 1
+    });
+  };
+
   const predictHeart = async () => {
     setHeartError(null);
     const results = {};
     try {
       for (const model of models) {
-        const res = await fetch(`https://ai-webapp-production.up.railway.app/predict/heart/ml/${model}`, {
+        const res = await fetch(`${API_URL}/predict/heart/ml/${model}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({age: heartInputs.age, cholesterol: heartInputs.cholesterol, resting_bp: heartInputs.restingBp})
+          body: JSON.stringify(heartInputs)
         });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -55,7 +144,7 @@ function MLTest() {
     const results = {};
     try {
       for (const model of models) {
-        const res = await fetch(`https://ai-webapp-production.up.railway.app/predict/car/ml/${model}`, {
+        const res = await fetch(`${API_URL}/predict/car/ml/${model}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -98,25 +187,32 @@ function MLTest() {
 
   const inputContainerStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
     gap: "15px",
     marginBottom: "20px"
+  };
+
+  const presetButtonContainerStyle = {
+    display: "flex",
+    gap: "10px",
+    marginBottom: "20px",
+    flexWrap: "wrap"
   };
 
   const labelStyle = {
     display: "flex",
     flexDirection: "column",
-    fontSize: "14px",
+    fontSize: "13px",
     fontWeight: "500",
     color: "#333"
   };
 
   const inputStyle = {
-    padding: "10px",
-    marginTop: "5px",
+    padding: "8px",
+    marginTop: "4px",
     border: "1px solid #ddd",
-    borderRadius: "5px",
-    fontSize: "14px"
+    borderRadius: "4px",
+    fontSize: "13px"
   };
 
   const buttonStyle = {
@@ -129,6 +225,17 @@ function MLTest() {
     borderRadius: "5px",
     cursor: "pointer",
     marginTop: "10px",
+    transition: "background-color 0.3s"
+  };
+
+  const presetButtonStyle = {
+    padding: "8px 16px",
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
     transition: "background-color 0.3s"
   };
 
@@ -155,22 +262,6 @@ function MLTest() {
     textAlign: "left"
   };
 
-  const modelNameStyle = {
-    fontWeight: "600",
-    color: "#333",
-    minWidth: "120px"
-  };
-
-  const resultValueStyle = {
-    color: "#007bff",
-    fontWeight: "bold"
-  };
-
-  const accuracyStyle = {
-    color: "#666",
-    fontSize: "14px"
-  };
-
   const errorStyle = {
     padding: "15px",
     backgroundColor: "#f8d7da",
@@ -182,14 +273,12 @@ function MLTest() {
 
   return (
     <div style={containerStyle}>
-      <h1 style={{ 
-        textAlign: "center", 
-        color: "#333", 
+      <h1 style={{
+        textAlign: "center",
+        color: "#333",
         marginBottom: "40px",
         fontSize: "36px",
-        fontWeight: "600",
-        lineHeight: "1.8",
-        letterSpacing: "0.5px"
+        fontWeight: "600"
       }}>
         🤖 Machine Learning (KNN, SVM, Decision Tree) Prediction
       </h1>
@@ -197,74 +286,68 @@ function MLTest() {
       {/* Heart Dataset */}
       <div style={cardStyle}>
         <h2 style={{ color: "#dc3545", marginTop: 0, borderBottom: "2px solid #dc3545", paddingBottom: "10px" }}>
-          ❤️ Heart Disease Prediction
+          ❤️ Heart Disease Prediction (18 Features)
         </h2>
-        
-        <div style={inputContainerStyle}>
-          <label style={labelStyle}>
-            Age
-            <input 
-              type="number" 
-              value={heartInputs.age} 
-              onChange={(e) => setHeartInputs({...heartInputs, age: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Cholesterol (mg/dL)
-            <input 
-              type="number" 
-              value={heartInputs.cholesterol} 
-              onChange={(e) => setHeartInputs({...heartInputs, cholesterol: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Resting BP (mmHg)
-            <input 
-              type="number" 
-              value={heartInputs.restingBp} 
-              onChange={(e) => setHeartInputs({...heartInputs, restingBp: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
+
+        {/* Example Presets */}
+        <div style={presetButtonContainerStyle}>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#28a745"}}
+            onClick={healthyExample}
+          >
+            📊 Load Healthy Example
+          </button>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#dc3545"}}
+            onClick={diseaseExample}
+          >
+            ⚠️ Load Disease Example
+          </button>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#ffc107", color: "#333"}}
+            onClick={moderateExample}
+          >
+            📈 Load Moderate Example
+          </button>
         </div>
 
-        <button 
-          onClick={predictHeart}
-          onMouseEnter={(e) => e.target.style.backgroundColor = "#0056b3"}
-          onMouseLeave={(e) => e.target.style.backgroundColor = "#007bff"}
-          style={buttonStyle}
-        >
-          🔍 Predict Heart Status
-        </button>
+        {/* Input Fields - All 18 Features */}
+        <div style={inputContainerStyle}>
+          <label style={labelStyle}>Age <input type="number" value={heartInputs.age} onChange={(e) => setHeartInputs({...heartInputs, age: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Cholesterol (mg/dL) <input type="number" value={heartInputs.cholesterol} onChange={(e) => setHeartInputs({...heartInputs, cholesterol: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Resting BP (mmHg) <input type="number" value={heartInputs.restingBp} onChange={(e) => setHeartInputs({...heartInputs, restingBp: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Max HR (bpm) <input type="number" value={heartInputs.maxHr} onChange={(e) => setHeartInputs({...heartInputs, maxHr: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Oldpeak <input type="number" step="0.1" value={heartInputs.oldpeak} onChange={(e) => setHeartInputs({...heartInputs, oldpeak: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Risk Score (0-100) <input type="number" value={heartInputs.riskScore} onChange={(e) => setHeartInputs({...heartInputs, riskScore: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Fasting Blood Sugar (mg/dL) <input type="number" value={heartInputs.fastingBloodSugar} onChange={(e) => setHeartInputs({...heartInputs, fastingBloodSugar: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>ST Slope (0-2) <input type="number" value={heartInputs.stSlope} onChange={(e) => setHeartInputs({...heartInputs, stSlope: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>ST Segment (0-1) <input type="number" value={heartInputs.stSegment} onChange={(e) => setHeartInputs({...heartInputs, stSegment: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Num Major Vessels (0-4) <input type="number" value={heartInputs.numMajorVessels} onChange={(e) => setHeartInputs({...heartInputs, numMajorVessels: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Exercise Angina (0-1) <input type="number" value={heartInputs.exerciseInducedAngina} onChange={(e) => setHeartInputs({...heartInputs, exerciseInducedAngina: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Smoking (0-2) <input type="number" value={heartInputs.smoking} onChange={(e) => setHeartInputs({...heartInputs, smoking: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Diabetic (0-1) <input type="number" value={heartInputs.diabetic} onChange={(e) => setHeartInputs({...heartInputs, diabetic: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Family History (0-1) <input type="number" value={heartInputs.familyHistory} onChange={(e) => setHeartInputs({...heartInputs, familyHistory: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Sedentary Minutes <input type="number" value={heartInputs.sedentaryMinutes} onChange={(e) => setHeartInputs({...heartInputs, sedentaryMinutes: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Sleep Duration (hours) <input type="number" step="0.5" value={heartInputs.sleepDuration} onChange={(e) => setHeartInputs({...heartInputs, sleepDuration: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>BMI <input type="number" step="0.1" value={heartInputs.bmi} onChange={(e) => setHeartInputs({...heartInputs, bmi: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Alcohol (units/week) <input type="number" value={heartInputs.alcoholConsumption} onChange={(e) => setHeartInputs({...heartInputs, alcoholConsumption: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+        </div>
 
-        {heartError && (
-          <div style={errorStyle}>
-            <strong>Error:</strong> {heartError}
-          </div>
-        )}
+        <button style={buttonStyle} onClick={predictHeart}>🔮 Predict Heart Disease</button>
 
-        {Object.keys(heartResults).length > 0 && !heartError && (
+        {heartError && <div style={errorStyle}>{heartError}</div>}
+        {Object.keys(heartResults).length > 0 && (
           <div style={resultCardStyle}>
-            <h3 style={{ marginTop: 0, color: "#007bff" }}>Prediction Results</h3>
+            <h3 style={{ marginTop: 0, color: "#dc3545" }}>Results</h3>
             <table style={resultTableStyle}>
               <tbody>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>KNN</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle}}>{heartResults.knn || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {heartResults.knnAcc || 0}%</td>
-                </tr>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>SVM</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle}}>{heartResults.svm || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {heartResults.svmAcc || 0}%</td>
-                </tr>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>Decision Tree</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle}}>{heartResults.dt || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {heartResults.dtAcc || 0}%</td>
-                </tr>
+                {models.map((model) => (
+                  <tr key={model} style={resultRowStyle}>
+                    <td style={{...resultCellStyle, fontWeight: "600"}}>{model.toUpperCase()}</td>
+                    <td style={{...resultCellStyle, color: "#dc3545", fontWeight: "bold"}}>{heartResults[model]}</td>
+                    <td style={{...resultCellStyle, fontSize: "13px"}}>Accuracy: {heartResults[`${model}Acc`]?.toFixed(1)}%</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -273,102 +356,34 @@ function MLTest() {
 
       {/* Car Dataset */}
       <div style={cardStyle}>
-        <h2 style={{ color: "#28a745", marginTop: 0, borderBottom: "2px solid #28a745", paddingBottom: "10px" }}>
+        <h2 style={{ color: "#007bff", marginTop: 0, borderBottom: "2px solid #007bff", paddingBottom: "10px" }}>
           🚗 Car Evaluation Prediction
         </h2>
-        
+
         <div style={inputContainerStyle}>
-          <label style={labelStyle}>
-            Buying Price
-            <input 
-              type="number" 
-              value={carInputs.buying} 
-              onChange={(e) => setCarInputs({...carInputs, buying: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Maintenance Cost
-            <input 
-              type="number" 
-              value={carInputs.maint} 
-              onChange={(e) => setCarInputs({...carInputs, maint: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Doors
-            <input 
-              type="number" 
-              value={carInputs.doors} 
-              onChange={(e) => setCarInputs({...carInputs, doors: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Persons (Capacity)
-            <input 
-              type="number" 
-              value={carInputs.persons} 
-              onChange={(e) => setCarInputs({...carInputs, persons: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Lug Boot Space
-            <input 
-              type="number" 
-              value={carInputs.lug_boot} 
-              onChange={(e) => setCarInputs({...carInputs, lug_boot: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
-          <label style={labelStyle}>
-            Safety Rating
-            <input 
-              type="number" 
-              value={carInputs.safety} 
-              onChange={(e) => setCarInputs({...carInputs, safety: parseFloat(e.target.value) || 0})}
-              style={inputStyle}
-            />
-          </label>
+          <label style={labelStyle}>Buying (0-4) <input type="number" value={carInputs.buying} onChange={(e) => setCarInputs({...carInputs, buying: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Maintenance (0-4) <input type="number" value={carInputs.maint} onChange={(e) => setCarInputs({...carInputs, maint: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Doors <input type="number" value={carInputs.doors} onChange={(e) => setCarInputs({...carInputs, doors: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Persons <input type="number" value={carInputs.persons} onChange={(e) => setCarInputs({...carInputs, persons: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Luggage Boot <input type="number" value={carInputs.lug_boot} onChange={(e) => setCarInputs({...carInputs, lug_boot: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Safety <input type="number" value={carInputs.safety} onChange={(e) => setCarInputs({...carInputs, safety: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
         </div>
 
-        <button 
-          onClick={predictCar}
-          onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
-          onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
-          style={{...buttonStyle, backgroundColor: "#28a745"}}
-        >
-          🔍 Predict Car Rating
-        </button>
+        <button style={buttonStyle} onClick={predictCar}>🔮 Evaluate Car</button>
 
-        {carError && (
-          <div style={errorStyle}>
-            <strong>Error:</strong> {carError}
-          </div>
-        )}
-
-        {Object.keys(carResults).length > 0 && !carError && (
-          <div style={{...resultCardStyle, backgroundColor: "#f0fff4", borderColor: "#28a745"}}>
-            <h3 style={{ marginTop: 0, color: "#28a745" }}>Prediction Results</h3>
+        {carError && <div style={errorStyle}>{carError}</div>}
+        {Object.keys(carResults).length > 0 && (
+          <div style={resultCardStyle}>
+            <h3 style={{ marginTop: 0, color: "#007bff" }}>Results</h3>
             <table style={resultTableStyle}>
               <tbody>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>KNN</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle, color: "#28a745"}}>{carResults.knn || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {carResults.knnAcc || 0}%</td>
-                </tr>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>SVM</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle, color: "#28a745"}}>{carResults.svm || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {carResults.svmAcc || 0}%</td>
-                </tr>
-                <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, ...modelNameStyle}}>Decision Tree</td>
-                  <td style={{...resultCellStyle, ...resultValueStyle, color: "#28a745"}}>{carResults.dt || 'N/A'}</td>
-                  <td style={{...resultCellStyle, ...accuracyStyle}}>Confidence: {carResults.dtAcc || 0}%</td>
-                </tr>
+                {models.map((model) => (
+                  <tr key={model} style={resultRowStyle}>
+                    <td style={{...resultCellStyle, fontWeight: "600"}}>{model.toUpperCase()}</td>
+                    <td style={{...resultCellStyle, color: "#007bff", fontWeight: "bold"}}>{carResults[model]}</td>
+                    <td style={{...resultCellStyle, fontSize: "13px"}}>Accuracy: {carResults[`${model}Acc`]?.toFixed(1)}%</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
