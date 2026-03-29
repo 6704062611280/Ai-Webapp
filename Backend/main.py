@@ -41,6 +41,7 @@ car_scaler = joblib.load("models/car/scaler.pkl")
 car_nn = load_model("models/car/model.h5")
 car_columns = joblib.load("models/car/columns.pkl")
 car_label_encoder = joblib.load("models/car/label_encoder.pkl")
+car_feature_encoders = joblib.load("models/car/feature_encoders.pkl")
 
 # ================= INPUT =================
 class HeartInput(BaseModel):
@@ -213,6 +214,7 @@ def car_ml(model_name: str, data: CarInput):
         if model is None:
             return {"error": f"model '{model_name}' not found"}
 
+        # Create DataFrame with string values
         df_input = pd.DataFrame([{
             'buying': buying_map[data.buying],
             'maint': maint_map[data.maint],
@@ -221,10 +223,13 @@ def car_ml(model_name: str, data: CarInput):
             'lug_boot': lug_boot_map[data.lug_boot],
             'safety': safety_map[data.safety]
         }])
-        df_input = pd.get_dummies(df_input)
-        df_input = df_input.reindex(columns=car_columns, fill_value=0)
-        x = car_scaler.transform(df_input.values)
-
+        
+        # Apply label encoding (same as training)
+        for col in car_columns:
+            df_input[col] = car_feature_encoders[col].transform(df_input[col])
+        
+        # Scale and predict
+        x = car_scaler.transform(df_input[car_columns].values)
         result = model.predict(x)
         probs = model.predict_proba(x)[0]
         accuracy = float(np.max(probs)) * 100
@@ -244,6 +249,7 @@ def car_ml(model_name: str, data: CarInput):
 @app.post("/predict/car/nn")
 def car_nn_api(data: CarInput):
     try:
+        # Create DataFrame with string values
         df_input = pd.DataFrame([{
             'buying': buying_map[data.buying],
             'maint': maint_map[data.maint],
@@ -252,10 +258,13 @@ def car_nn_api(data: CarInput):
             'lug_boot': lug_boot_map[data.lug_boot],
             'safety': safety_map[data.safety]
         }])
-        df_input = pd.get_dummies(df_input)
-        df_input = df_input.reindex(columns=car_columns, fill_value=0)
-        x = car_scaler.transform(df_input.values)
-
+        
+        # Apply label encoding  (same as training)
+        for col in car_columns:
+            df_input[col] = car_feature_encoders[col].transform(df_input[col])
+        
+        # Scale and predict
+        x = car_scaler.transform(df_input[car_columns].values)
         result = car_nn.predict(x)
         accuracy = float(np.max(result[0])) * 100
         pred_class = int(np.argmax(result))
