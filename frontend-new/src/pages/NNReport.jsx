@@ -51,6 +51,87 @@ function NNReport() {
     <div style={containerStyle}>
       <h1 style={titleStyle}>🧠 รายงานการพัฒนาโมเดล Neural Network</h1>
 
+      {/* Dataset Information Section */}
+      <div style={sectionStyle}>
+        <h2 style={subTitleStyle}>0. ข้อมูลเกี่ยวกับชุดข้อมูล (Dataset Information)</h2>
+        
+        <h3 style={{...subTitleStyle, fontSize: "16px", color: "#333"}}>
+          ❤️ ชุดข้อมูลโรคหัวใจ (Heart Disease Risk Prediction Dataset)
+        </h3>
+        <p style={textStyle}>
+          <strong>แหล่งข้อมูล: </strong>
+          <a href="https://www.kaggle.com/datasets/rhythmghai/synthetic-heart-disease-risk-prediction-dataset" target="_blank" rel="noopener noreferrer" style={{color: "#28a745"}}>
+            Kaggle - Synthetic Heart Disease Risk Prediction Dataset
+          </a> <span style={{color: "#d9534f"}}>⚠️ (ลิงค์นี้ใช้ไม่ได้แล้ว)</span>
+        </p>
+        <p style={textStyle}>
+          <strong>ขนาดชุดข้อมูล:</strong> 12,000 ตัวอย่าง<br/>
+          <strong>จำนวนฟีเจอร์:</strong> 16 ฟีเจอร์ (ไม่รวม Risk_Score target)<br/>
+          <strong>คลาสที่คาดการณ์:</strong> 2 คลาส (Healthy/Heart disease)
+        </p>
+
+        <h4 style={{...subTitleStyle, fontSize: "14px", color: "#555", marginTop: "20px"}}>รายละเอียดฟีเจอร์ (Feature Details):</h4>
+        <div style={listStyle}>
+          1. <strong>Age</strong>: อายุของผู้ป่วย (ปี)<br/>
+          2. <strong>Gender</strong>: เพศ (0=Female, 1=Male)<br/>
+          3. <strong>Resting_BP</strong>: ความดันเลือดขณะพัก (mmHg)<br/>
+          4. <strong>Cholesterol</strong>: ระดับคอเลสเตอรอล (mg/dL)<br/>
+          5. <strong>Fasting_Blood_Sugar</strong>: น้ำตาลในเลือดขณะอดอาหาร (mg/dL) ⭐ <strong>ตัวชี้วัดสำคัญ</strong><br/>
+          6. <strong>Max_Heart_Rate</strong>: อัตราการเต้นสูงสุดที่บรรลุ (bpm)<br/>
+          7. <strong>ECG_Result</strong>: ผลการทำ ECG (0=LVH, 1=Normal, 2=ST)<br/>
+          8. <strong>Smoking_Status</strong>: สถานะการสูบบุหรี่ (0=Current, 1=Former, 2=Never)<br/>
+          9. <strong>Alcohol_Consumption</strong>: การบริโภคแอลกอฮอล์ (หน่วย/สัปดาห์)<br/>
+          10. <strong>Physical_Activity_Level</strong>: ระดับกิจกรรมทางกายภาพ (0=High, 1=Low, 2=Moderate)<br/>
+          11. <strong>Diet_Quality_Score</strong>: คะแนนคุณภาพอาหาร (0-100)<br/>
+          12. <strong>Sleep_Hours</strong>: ชั่วโมงการนอนหลับต่อคืน<br/>
+          13. <strong>BMI</strong>: ดัชนีมวลกาย (Body Mass Index)<br/>
+          14. <strong>Diabetes</strong>: มีโรคเบาหวาน (0=No, 1=Yes)<br/>
+          15. <strong>Hypertension</strong>: มีโรคความดันโลหิตสูง (0=No, 1=Yes)<br/>
+          16. <strong>Family_History</strong>: มีประวัติโรคหัวใจในครอบครัว (0=No, 1=Yes)
+        </div>
+
+        <p style={{...textStyle, marginTop: "20px"}}>
+          <strong>หมายเหตุ:</strong> ค่า Fasting_Blood_Sugar เป็นตัวชี้วัดที่สำคัญมากในการวินิจฉัยโรคหัวใจ ผู้ป่วยที่มีโรคหัวใจส่วนใหญ่มีค่า FSB สูงกว่า 140 mg/dL
+        </p>
+
+        <h3 style={{...subTitleStyle, fontSize: "16px", color: "#333", marginTop: "30px"}}>
+          🚗 ชุดข้อมูลประเมินรถยนต์ (Car Evaluation Dataset)
+        </h3>
+        <p style={textStyle}>
+          <strong>แหล่งข้อมูล: </strong>
+          <a href="https://archive.ics.uci.edu/dataset/19/car+evaluation" target="_blank" rel="noopener noreferrer" style={{color: "#28a745"}}>
+            UCI Machine Learning Repository - Car Evaluation
+          </a>
+        </p>
+        <p style={textStyle}>
+          <strong>ขนาดชุดข้อมูล:</strong> 1,728 ตัวอย่าง<br/>
+          <strong>จำนวนฟีเจอร์:</strong> 6 ฟีเจอร์ (ทั้งหมดเป็นตัวแปรแบบ ordered categorical)<br/>
+          <strong>คลาสที่คาดการณ์:</strong> 4 คลาส (unacc, acc, good, vgood)
+        </p>
+
+        <h4 style={{...subTitleStyle, fontSize: "14px", color: "#555", marginTop: "20px"}}>รายละเอียดฟีเจอร์และการแมป (Feature Details & Mapping):</h4>
+        <div style={listStyle}>
+          1. <strong>buying</strong>: ราคาซื้อ (1=vhigh สูงมาก, 2=high สูง, 3=med ปานกลาง, 4=low ต่ำ)<br/>
+          2. <strong>maint</strong>: ราคาบำรุงรักษา (1=vhigh สูงมาก, 2=high สูง, 3=med ปานกลาง, 4=low ต่ำ)<br/>
+          3. <strong>doors</strong>: จำนวนประตู (2, 3, 4, หรือ 5 5=มากกว่า)<br/>
+          4. <strong>persons</strong>: ความจุของผู้โดยสาร (2, 4, หรือ 5 5=มากกว่า)<br/>
+          5. <strong>lug_boot</strong>: ขนาดท้ายรถ (1=small เล็ก, 2=med ปานกลาง, 3=big ใหญ่)<br/>
+          6. <strong>safety</strong>: การประเมินความปลอดภัย (1=low ต่ำ, 2=med ปานกลาง, 3=high สูง)
+        </div>
+
+        <h4 style={{...subTitleStyle, fontSize: "14px", color: "#555", marginTop: "20px"}}>คลาสเป้าหมาย (Target Classes):</h4>
+        <div style={listStyle}>
+          • <strong>unacc</strong> (Unacceptable - ไม่ยอมรับได้): รถที่ไม่แนะนำในการซื้อ<br/>
+          • <strong>acc</strong> (Acceptable - ยอมรับได้): รถที่ยอมรับได้ในราคาที่เหมาะสม<br/>
+          • <strong>good</strong> (Good - ดี): รถที่ดีและแนะนำในการซื้อ<br/>
+          • <strong>vgood</strong> (Very Good - ดีมาก): รถที่ดีมากและเป็นช่วยในการตัดสินใจซื้อ
+        </div>
+
+        <p style={{...textStyle, marginTop: "20px"}}>
+          <strong>กรณีการใช้งาน:</strong> ชุดข้อมูลนี้ใช้สำหรับการประเมินอัตโนมัติของคุณภาพรถยนต์และการสนับสนุนการตัดสินใจของผู้ซื้อ
+        </p>
+      </div>
+
       {/* Data Preparation Section */}
       <div style={sectionStyle}>
         <h2 style={subTitleStyle}>1. การเตรียมข้อมูล (Data Preparation)</h2>

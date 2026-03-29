@@ -64,23 +64,23 @@ function MLTest() {
 
   const diseaseExample = () => {
     setHeartInputs({
-      age: 65,
-      gender: 1,
-      restingBp: 160,
-      cholesterol: 280,
-      fastingBloodSugar: 150,
-      maxHr: 90,
-      ecgResult: 2,
+      age: 66,
+      gender: 0,
+      restingBp: 121,
+      cholesterol: 211,
+      fastingBloodSugar: 177,
+      maxHr: 141,
+      ecgResult: 1,
       smokingStatus: 0,
       alcoholConsumption: 2,
-      physicalActivityLevel: 1,
-      dietQualityScore: 30,
-      sleepHours: 5,
-      bmi: 30,
+      physicalActivityLevel: 2,
+      dietQualityScore: 4,
+      sleepHours: 6,
+      bmi: 25,
       diabetes: 1,
       hypertension: 1,
       familyHistory: 1,
-      riskScore: 85
+      riskScore: 68
     });
   };
 

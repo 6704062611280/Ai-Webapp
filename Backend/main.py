@@ -29,6 +29,7 @@ heart_scaler = joblib.load("models/heart/scaler.pkl")
 heart_nn = load_model("models/heart/model.h5")
 heart_label_encoder = joblib.load("models/heart/label_encoder.pkl")
 heart_columns = joblib.load("models/heart/columns.pkl")  # Load feature column names
+heart_feature_encoders = joblib.load("models/heart/feature_encoders_heart.pkl")  # Categorical encoders
 
 # ================= LOAD CAR =================
 car_models = {
@@ -112,28 +113,38 @@ def heart_ml(model_name: str, data: HeartInput):
         if model is None:
             return {"error": f"model '{model_name}' not found"}
 
-        # Create DataFrame with actual feature names in correct order
+        # Map integer inputs to categorical text values, then encode
+        gender_map = {0: 'Female', 1: 'Male'}
+        ecg_map = {0: 'LVH', 1: 'Normal', 2: 'ST'}
+        smoking_map = {0: 'Current', 1: 'Former', 2: 'Never'}
+        activity_map = {0: 'High', 1: 'Low', 2: 'Moderate'}
+
+        # Create DataFrame with categorical values (before encoding)
         df_input = pd.DataFrame([{
             'Age': data.age,
-            'Gender': data.gender,
+            'Gender': gender_map.get(int(data.gender), 'Male'),
             'Resting_BP': data.restingBp,
             'Cholesterol': data.cholesterol,
             'Fasting_Blood_Sugar': data.fastingBloodSugar,
             'Max_Heart_Rate': data.maxHr,
-            'ECG_Result': data.ecgResult,
-            'Smoking_Status': data.smokingStatus,
+            'ECG_Result': ecg_map.get(int(data.ecgResult), 'Normal'),
+            'Smoking_Status': smoking_map.get(int(data.smokingStatus), 'Never'),
             'Alcohol_Consumption': data.alcoholConsumption,
-            'Physical_Activity_Level': data.physicalActivityLevel,
+            'Physical_Activity_Level': activity_map.get(int(data.physicalActivityLevel), 'Moderate'),
             'Diet_Quality_Score': data.dietQualityScore,
             'Sleep_Hours': data.sleepHours,
             'BMI': data.bmi,
             'Diabetes': data.diabetes,
             'Hypertension': data.hypertension,
-            'Family_History': data.familyHistory,
-            'Risk_Score': data.riskScore
+            'Family_History': data.familyHistory
         }])
         
-        # Ensure DataFrame columns match heart_columns in correct order
+        # Encode categorical columns using the saved encoders
+        for col in ['Gender', 'ECG_Result', 'Smoking_Status', 'Physical_Activity_Level']:
+            if col in heart_feature_encoders:
+                df_input[col] = heart_feature_encoders[col].transform(df_input[col])
+        
+        # Reorder and select columns
         df_input = df_input[heart_columns]
         x = heart_scaler.transform(df_input.values)
 
@@ -156,28 +167,38 @@ def heart_ml(model_name: str, data: HeartInput):
 @app.post("/predict/heart/nn")
 def heart_nn_api(data: HeartInput):
     try:
-        # Create DataFrame with actual feature names in correct order
+        # Map integer inputs to categorical text values, then encode
+        gender_map = {0: 'Female', 1: 'Male'}
+        ecg_map = {0: 'LVH', 1: 'Normal', 2: 'ST'}
+        smoking_map = {0: 'Current', 1: 'Former', 2: 'Never'}
+        activity_map = {0: 'High', 1: 'Low', 2: 'Moderate'}
+
+        # Create DataFrame with categorical values (before encoding)
         df_input = pd.DataFrame([{
             'Age': data.age,
-            'Gender': data.gender,
+            'Gender': gender_map.get(int(data.gender), 'Male'),
             'Resting_BP': data.restingBp,
             'Cholesterol': data.cholesterol,
             'Fasting_Blood_Sugar': data.fastingBloodSugar,
             'Max_Heart_Rate': data.maxHr,
-            'ECG_Result': data.ecgResult,
-            'Smoking_Status': data.smokingStatus,
+            'ECG_Result': ecg_map.get(int(data.ecgResult), 'Normal'),
+            'Smoking_Status': smoking_map.get(int(data.smokingStatus), 'Never'),
             'Alcohol_Consumption': data.alcoholConsumption,
-            'Physical_Activity_Level': data.physicalActivityLevel,
+            'Physical_Activity_Level': activity_map.get(int(data.physicalActivityLevel), 'Moderate'),
             'Diet_Quality_Score': data.dietQualityScore,
             'Sleep_Hours': data.sleepHours,
             'BMI': data.bmi,
             'Diabetes': data.diabetes,
             'Hypertension': data.hypertension,
-            'Family_History': data.familyHistory,
-            'Risk_Score': data.riskScore
+            'Family_History': data.familyHistory
         }])
         
-        # Ensure DataFrame columns match heart_columns in correct order
+        # Encode categorical columns using the saved encoders
+        for col in ['Gender', 'ECG_Result', 'Smoking_Status', 'Physical_Activity_Level']:
+            if col in heart_feature_encoders:
+                df_input[col] = heart_feature_encoders[col].transform(df_input[col])
+        
+        # Reorder and select columns
         df_input = df_input[heart_columns]
         x = heart_scaler.transform(df_input.values)
 
