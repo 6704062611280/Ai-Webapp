@@ -110,6 +110,19 @@ function MLTest() {
     });
   };
 
+  // Car Evaluation Example Presets
+  const carBadExample = () => {
+    setCarInputs({ buying: 4, maint: 4, doors: 2, persons: 2, lug_boot: 1, safety: 1 });
+  };
+
+  const carGoodExample = () => {
+    setCarInputs({ buying: 1, maint: 1, doors: 4, persons: 5, lug_boot: 3, safety: 3 });
+  };
+
+  const carModerateExample = () => {
+    setCarInputs({ buying: 2, maint: 2, doors: 3, persons: 4, lug_boot: 2, safety: 2 });
+  };
+
   const predictHeart = async () => {
     setHeartError(null);
     const results = {};
@@ -359,6 +372,28 @@ function MLTest() {
         <h2 style={{ color: "#007bff", marginTop: 0, borderBottom: "2px solid #007bff", paddingBottom: "10px" }}>
           🚗 Car Evaluation Prediction
         </h2>
+
+        {/* Car Presets */}
+        <div style={presetButtonContainerStyle}>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#dc3545"}}
+            onClick={carBadExample}
+          >
+            ❌ Poor Car
+          </button>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#ffc107", color: "#333"}}
+            onClick={carModerateExample}
+          >
+            ⚠️ Average Car
+          </button>
+          <button 
+            style={{...presetButtonStyle, backgroundColor: "#28a745"}}
+            onClick={carGoodExample}
+          >
+            ✅ Good Car
+          </button>
+        </div>
 
         <div style={inputContainerStyle}>
           <label style={labelStyle}>Buying (0-4) <input type="number" value={carInputs.buying} onChange={(e) => setCarInputs({...carInputs, buying: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
