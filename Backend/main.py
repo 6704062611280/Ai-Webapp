@@ -111,13 +111,8 @@ def heart_ml(model_name: str, data: HeartInput):
         if model is None:
             return {"error": f"model '{model_name}' not found"}
 
-        features = [
-            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
-            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
-            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
-            data.diabetic, data.familyHistory, data.sedentaryMinutes,
-            data.sleepDuration, data.bmi, data.alcoholConsumption
-        ]
+        # Use only the 3 features that the scaler was trained on
+        features = [data.age, data.cholesterol, data.restingBp]
         x = process_input(heart_scaler, features)
 
         result = model.predict(x)
@@ -139,13 +134,8 @@ def heart_ml(model_name: str, data: HeartInput):
 @app.post("/predict/heart/nn")
 def heart_nn_api(data: HeartInput):
     try:
-        features = [
-            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
-            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
-            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
-            data.diabetic, data.familyHistory, data.sedentaryMinutes,
-            data.sleepDuration, data.bmi, data.alcoholConsumption
-        ]
+        # Use only the 3 features that the scaler was trained on
+        features = [data.age, data.cholesterol, data.restingBp]
         x = process_input(heart_scaler, features)
 
         result = heart_nn.predict(x)
