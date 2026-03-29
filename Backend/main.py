@@ -45,7 +45,7 @@ car_label_encoder = joblib.load("models/car/label_encoder.pkl")
 class HeartInput(BaseModel):
     age: float
     cholesterol: float
-    resting_bp: float
+    restingBp: float
     maxHr: float
     oldpeak: float
     riskScore: float
@@ -112,7 +112,7 @@ def heart_ml(model_name: str, data: HeartInput):
             return {"error": f"model '{model_name}' not found"}
 
         features = [
-            data.age, data.cholesterol, data.resting_bp, data.maxHr, data.oldpeak,
+            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
             data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
             data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
             data.diabetic, data.familyHistory, data.sedentaryMinutes,
@@ -140,7 +140,7 @@ def heart_ml(model_name: str, data: HeartInput):
 def heart_nn_api(data: HeartInput):
     try:
         features = [
-            data.age, data.cholesterol, data.resting_bp, data.maxHr, data.oldpeak,
+            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
             data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
             data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
             data.diabetic, data.familyHistory, data.sedentaryMinutes,
