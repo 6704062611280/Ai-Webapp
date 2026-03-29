@@ -28,6 +28,7 @@ heart_models = {
 heart_scaler = joblib.load("models/heart/scaler.pkl")
 heart_nn = load_model("models/heart/model.h5")
 heart_label_encoder = joblib.load("models/heart/label_encoder.pkl")
+heart_columns = joblib.load("models/heart/columns.pkl")  # Load feature column names
 
 # ================= LOAD CAR =================
 car_models = {
@@ -43,24 +44,23 @@ car_label_encoder = joblib.load("models/car/label_encoder.pkl")
 
 # ================= INPUT =================
 class HeartInput(BaseModel):
-    age: float
-    cholesterol: float
+    age: float | int
+    gender: float | int  # 0=Female, 1=Male
     restingBp: float
-    maxHr: float
-    oldpeak: float
-    riskScore: float
+    cholesterol: float
     fastingBloodSugar: float
-    stSlope: float
-    stSegment: float
-    numMajorVessels: float
-    exerciseInducedAngina: float
-    smoking: float
-    diabetic: float
-    familyHistory: float
-    sedentaryMinutes: float
-    sleepDuration: float
-    bmi: float
+    maxHr: float
+    ecgResult: float | int  # 0=LVH, 1=Normal, 2=ST
+    smokingStatus: float | int  # 0=Current, 1=Former, 2=Never
     alcoholConsumption: float
+    physicalActivityLevel: float | int  # 0=High, 1=Low, 2=Moderate
+    dietQualityScore: float
+    sleepHours: float
+    bmi: float
+    diabetes: float | int
+    hypertension: float | int
+    familyHistory: float | int
+    riskScore: float
 
 
 class CarInput(BaseModel):
@@ -111,15 +111,30 @@ def heart_ml(model_name: str, data: HeartInput):
         if model is None:
             return {"error": f"model '{model_name}' not found"}
 
-        # Use all 18 features that the new models are trained on
-        features = [
-            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
-            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
-            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
-            data.diabetic, data.familyHistory, data.sedentaryMinutes,
-            data.sleepDuration, data.bmi, data.alcoholConsumption
-        ]
-        x = process_input(heart_scaler, features)
+        # Create DataFrame with actual feature names in correct order
+        df_input = pd.DataFrame([{
+            'Age': data.age,
+            'Gender': data.gender,
+            'Resting_BP': data.restingBp,
+            'Cholesterol': data.cholesterol,
+            'Fasting_Blood_Sugar': data.fastingBloodSugar,
+            'Max_Heart_Rate': data.maxHr,
+            'ECG_Result': data.ecgResult,
+            'Smoking_Status': data.smokingStatus,
+            'Alcohol_Consumption': data.alcoholConsumption,
+            'Physical_Activity_Level': data.physicalActivityLevel,
+            'Diet_Quality_Score': data.dietQualityScore,
+            'Sleep_Hours': data.sleepHours,
+            'BMI': data.bmi,
+            'Diabetes': data.diabetes,
+            'Hypertension': data.hypertension,
+            'Family_History': data.familyHistory,
+            'Risk_Score': data.riskScore
+        }])
+        
+        # Ensure DataFrame columns match heart_columns in correct order
+        df_input = df_input[heart_columns]
+        x = heart_scaler.transform(df_input.values)
 
         result = model.predict(x)
         probs = model.predict_proba(x)[0]
@@ -140,15 +155,30 @@ def heart_ml(model_name: str, data: HeartInput):
 @app.post("/predict/heart/nn")
 def heart_nn_api(data: HeartInput):
     try:
-        # Use all 18 features that the new model is trained on
-        features = [
-            data.age, data.cholesterol, data.restingBp, data.maxHr, data.oldpeak,
-            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
-            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
-            data.diabetic, data.familyHistory, data.sedentaryMinutes,
-            data.sleepDuration, data.bmi, data.alcoholConsumption
-        ]
-        x = process_input(heart_scaler, features)
+        # Create DataFrame with actual feature names in correct order
+        df_input = pd.DataFrame([{
+            'Age': data.age,
+            'Gender': data.gender,
+            'Resting_BP': data.restingBp,
+            'Cholesterol': data.cholesterol,
+            'Fasting_Blood_Sugar': data.fastingBloodSugar,
+            'Max_Heart_Rate': data.maxHr,
+            'ECG_Result': data.ecgResult,
+            'Smoking_Status': data.smokingStatus,
+            'Alcohol_Consumption': data.alcoholConsumption,
+            'Physical_Activity_Level': data.physicalActivityLevel,
+            'Diet_Quality_Score': data.dietQualityScore,
+            'Sleep_Hours': data.sleepHours,
+            'BMI': data.bmi,
+            'Diabetes': data.diabetes,
+            'Hypertension': data.hypertension,
+            'Family_History': data.familyHistory,
+            'Risk_Score': data.riskScore
+        }])
+        
+        # Ensure DataFrame columns match heart_columns in correct order
+        df_input = df_input[heart_columns]
+        x = heart_scaler.transform(df_input.values)
 
         result = heart_nn.predict(x)
         accuracy = float(np.max(result[0])) * 100

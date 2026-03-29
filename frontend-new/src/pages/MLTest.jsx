@@ -5,23 +5,22 @@ const API_URL = import.meta.env.VITE_API_URL || "https://ai-webapp-production.up
 function MLTest() {
   const [heartInputs, setHeartInputs] = useState({
     age: 45,
-    cholesterol: 200,
+    gender: 1,
     restingBp: 120,
-    maxHr: 150,
-    oldpeak: 0,
-    riskScore: 25,
+    cholesterol: 180,
     fastingBloodSugar: 100,
-    stSlope: 2,
-    stSegment: 1,
-    numMajorVessels: 0,
-    exerciseInducedAngina: 0,
-    smoking: 2,
-    diabetic: 0,
-    familyHistory: 0,
-    sedentaryMinutes: 180,
-    sleepDuration: 7,
+    maxHr: 150,
+    ecgResult: 1,
+    smokingStatus: 2,
+    alcoholConsumption: 0,
+    physicalActivityLevel: 1,
+    dietQualityScore: 50,
+    sleepHours: 7,
     bmi: 24,
-    alcoholConsumption: 0
+    diabetes: 0,
+    hypertension: 0,
+    familyHistory: 0,
+    riskScore: 25
   });
 
   const [carInputs, setCarInputs] = useState({
@@ -44,69 +43,66 @@ function MLTest() {
   const healthyExample = () => {
     setHeartInputs({
       age: 45,
-      cholesterol: 180,
+      gender: 1,
       restingBp: 120,
-      maxHr: 150,
-      oldpeak: 0,
-      riskScore: 25,
+      cholesterol: 180,
       fastingBloodSugar: 100,
-      stSlope: 2,
-      stSegment: 1,
-      numMajorVessels: 0,
-      exerciseInducedAngina: 0,
-      smoking: 2,
-      diabetic: 0,
-      familyHistory: 0,
-      sedentaryMinutes: 180,
-      sleepDuration: 7,
+      maxHr: 150,
+      ecgResult: 1,
+      smokingStatus: 2,
+      alcoholConsumption: 0,
+      physicalActivityLevel: 1,
+      dietQualityScore: 50,
+      sleepHours: 7,
       bmi: 24,
-      alcoholConsumption: 0
+      diabetes: 0,
+      hypertension: 0,
+      familyHistory: 0,
+      riskScore: 25
     });
   };
 
   const diseaseExample = () => {
     setHeartInputs({
-      age: 60,
-      cholesterol: 280,
+      age: 65,
+      gender: 1,
       restingBp: 160,
-      maxHr: 100,
-      oldpeak: 2.5,
-      riskScore: 72,
+      cholesterol: 280,
       fastingBloodSugar: 150,
-      stSlope: 0,
-      stSegment: 0,
-      numMajorVessels: 2,
-      exerciseInducedAngina: 1,
-      smoking: 1,
-      diabetic: 1,
+      maxHr: 90,
+      ecgResult: 2,
+      smokingStatus: 0,
+      alcoholConsumption: 2,
+      physicalActivityLevel: 1,
+      dietQualityScore: 30,
+      sleepHours: 5,
+      bmi: 30,
+      diabetes: 1,
+      hypertension: 1,
       familyHistory: 1,
-      sedentaryMinutes: 480,
-      sleepDuration: 5,
-      bmi: 28,
-      alcoholConsumption: 2
+      riskScore: 85
     });
   };
 
   const moderateExample = () => {
     setHeartInputs({
-      age: 50,
-      cholesterol: 200,
-      restingBp: 130,
+      age: 55,
+      gender: 0,
+      restingBp: 140,
+      cholesterol: 220,
+      fastingBloodSugar: 110,
       maxHr: 120,
-      oldpeak: 1,
-      riskScore: 55,
-      fastingBloodSugar: 105,
-      stSlope: 1,
-      stSegment: 1,
-      numMajorVessels: 1,
-      exerciseInducedAngina: 0,
-      smoking: 0,
-      diabetic: 0,
-      familyHistory: 1,
-      sedentaryMinutes: 300,
-      sleepDuration: 6,
-      bmi: 26,
-      alcoholConsumption: 1
+      ecgResult: 1,
+      smokingStatus: 1,
+      alcoholConsumption: 1,
+      physicalActivityLevel: 0,
+      dietQualityScore: 40,
+      sleepHours: 6,
+      bmi: 27,
+      diabetes: 0,
+      hypertension: 1,
+      familyHistory: 0,
+      riskScore: 50
     });
   };
 
