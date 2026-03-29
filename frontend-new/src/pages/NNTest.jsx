@@ -22,7 +22,7 @@ function NNTest() {
   const predictHeart = async () => {
     setHeartError(null);
     try {
-      const res = await fetch("http://127.0.0.1:8004/predict/heart/nn", {
+      const res = await fetch("https://ai-webapp-production.up.railway.app/predict/heart/nn", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -46,7 +46,7 @@ function NNTest() {
   const predictCar = async () => {
     setCarError(null);
     try {
-      const res = await fetch("http://127.0.0.1:8004/predict/car/nn", {
+      const res = await fetch("https://ai-webapp-production.up.railway.app/predict/car/nn", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

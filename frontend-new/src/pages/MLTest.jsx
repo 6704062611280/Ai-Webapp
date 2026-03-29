@@ -26,7 +26,7 @@ function MLTest() {
     const results = {};
     try {
       for (const model of models) {
-        const res = await fetch(`http://127.0.0.1:8004/predict/heart/ml/${model}`, {
+        const res = await fetch(`https://ai-webapp-production.up.railway.app/predict/heart/ml/${model}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -55,7 +55,7 @@ function MLTest() {
     const results = {};
     try {
       for (const model of models) {
-        const res = await fetch(`http://127.0.0.1:8004/predict/car/ml/${model}`, {
+        const res = await fetch(`https://ai-webapp-production.up.railway.app/predict/car/ml/${model}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
