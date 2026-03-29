@@ -46,6 +46,21 @@ class HeartInput(BaseModel):
     age: float
     cholesterol: float
     resting_bp: float
+    maxHr: float
+    oldpeak: float
+    riskScore: float
+    fastingBloodSugar: float
+    stSlope: float
+    stSegment: float
+    numMajorVessels: float
+    exerciseInducedAngina: float
+    smoking: float
+    diabetic: float
+    familyHistory: float
+    sedentaryMinutes: float
+    sleepDuration: float
+    bmi: float
+    alcoholConsumption: float
 
 
 class CarInput(BaseModel):
@@ -96,7 +111,13 @@ def heart_ml(model_name: str, data: HeartInput):
         if model is None:
             return {"error": f"model '{model_name}' not found"}
 
-        features = [data.age, data.cholesterol, data.resting_bp]
+        features = [
+            data.age, data.cholesterol, data.resting_bp, data.maxHr, data.oldpeak,
+            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
+            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
+            data.diabetic, data.familyHistory, data.sedentaryMinutes,
+            data.sleepDuration, data.bmi, data.alcoholConsumption
+        ]
         x = process_input(heart_scaler, features)
 
         result = model.predict(x)
@@ -118,7 +139,13 @@ def heart_ml(model_name: str, data: HeartInput):
 @app.post("/predict/heart/nn")
 def heart_nn_api(data: HeartInput):
     try:
-        features = [data.age, data.cholesterol, data.resting_bp]
+        features = [
+            data.age, data.cholesterol, data.resting_bp, data.maxHr, data.oldpeak,
+            data.riskScore, data.fastingBloodSugar, data.stSlope, data.stSegment,
+            data.numMajorVessels, data.exerciseInducedAngina, data.smoking,
+            data.diabetic, data.familyHistory, data.sedentaryMinutes,
+            data.sleepDuration, data.bmi, data.alcoholConsumption
+        ]
         x = process_input(heart_scaler, features)
 
         result = heart_nn.predict(x)
