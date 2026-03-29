@@ -12,6 +12,20 @@ dist
 dist-ssr
 *.local
 
+# Root-level frontend files (keep only in frontend-new/)
+/index.html
+/vite.config.js
+/eslint.config.js
+/package.json
+/package-lock.json
+.vercelignore
+
+# Python virtual environments
+Backend/venv*/
+Backend/.venv
+venv/
+.venv/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
