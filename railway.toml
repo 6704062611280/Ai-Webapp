@@ -1,5 +1,7 @@
-{
-  "build": {
-    "builder": "nixpacks"
-  }
-}
+[build]
+builder = "nixpacks"
+
+[[services]]
+name = "web"
+cmd = "uvicorn main:app --host 0.0.0.0 --port $PORT"
+
