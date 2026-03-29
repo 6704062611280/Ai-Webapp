@@ -322,23 +322,23 @@ function MLTest() {
 
         {/* Input Fields - All 17 Features */}
         <div style={inputContainerStyle}>
-          <label style={labelStyle}>Age (years) <input type="number" value={heartInputs.age} onChange={(e) => setHeartInputs({...heartInputs, age: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Gender (0=F, 1=M) <input type="number" min="0" max="1" value={heartInputs.gender} onChange={(e) => setHeartInputs({...heartInputs, gender: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Resting BP (mmHg) <input type="number" value={heartInputs.restingBp} onChange={(e) => setHeartInputs({...heartInputs, restingBp: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Cholesterol (mg/dL) <input type="number" value={heartInputs.cholesterol} onChange={(e) => setHeartInputs({...heartInputs, cholesterol: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Fasting Blood Sugar (mg/dL) <input type="number" value={heartInputs.fastingBloodSugar} onChange={(e) => setHeartInputs({...heartInputs, fastingBloodSugar: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Max HR (bpm) <input type="number" value={heartInputs.maxHr} onChange={(e) => setHeartInputs({...heartInputs, maxHr: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>ECG Result (0=LVH, 1=Normal, 2=ST) <input type="number" min="0" max="2" value={heartInputs.ecgResult} onChange={(e) => setHeartInputs({...heartInputs, ecgResult: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Smoking (0=Current, 1=Former, 2=Never) <input type="number" min="0" max="2" value={heartInputs.smokingStatus} onChange={(e) => setHeartInputs({...heartInputs, smokingStatus: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Alcohol (units/week) <input type="number" value={heartInputs.alcoholConsumption} onChange={(e) => setHeartInputs({...heartInputs, alcoholConsumption: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Physical Activity (0=High, 1=Low, 2=Mod) <input type="number" min="0" max="2" value={heartInputs.physicalActivityLevel} onChange={(e) => setHeartInputs({...heartInputs, physicalActivityLevel: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Diet Quality Score (0-100) <input type="number" value={heartInputs.dietQualityScore} onChange={(e) => setHeartInputs({...heartInputs, dietQualityScore: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Sleep Hours <input type="number" step="0.5" value={heartInputs.sleepHours} onChange={(e) => setHeartInputs({...heartInputs, sleepHours: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>BMI <input type="number" step="0.1" value={heartInputs.bmi} onChange={(e) => setHeartInputs({...heartInputs, bmi: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Diabetes (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.diabetes} onChange={(e) => setHeartInputs({...heartInputs, diabetes: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Hypertension (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.hypertension} onChange={(e) => setHeartInputs({...heartInputs, hypertension: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Family History (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.familyHistory} onChange={(e) => setHeartInputs({...heartInputs, familyHistory: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Risk Score (0-100) <input type="number" value={heartInputs.riskScore} onChange={(e) => setHeartInputs({...heartInputs, riskScore: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Age (years) <input type="number" value={heartInputs.age} onChange={(e) => setHeartInputs({...heartInputs, age: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Gender (0=F, 1=M) <input type="number" min="0" max="1" value={heartInputs.gender} onChange={(e) => setHeartInputs({...heartInputs, gender: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Resting BP (mmHg) <input type="number" value={heartInputs.restingBp} onChange={(e) => setHeartInputs({...heartInputs, restingBp: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Cholesterol (mg/dL) <input type="number" value={heartInputs.cholesterol} onChange={(e) => setHeartInputs({...heartInputs, cholesterol: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Fasting Blood Sugar (mg/dL) <input type="number" value={heartInputs.fastingBloodSugar} onChange={(e) => setHeartInputs({...heartInputs, fastingBloodSugar: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Max HR (bpm) <input type="number" value={heartInputs.maxHr} onChange={(e) => setHeartInputs({...heartInputs, maxHr: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>ECG Result (0=LVH, 1=Normal, 2=ST) <input type="number" min="0" max="2" value={heartInputs.ecgResult} onChange={(e) => setHeartInputs({...heartInputs, ecgResult: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Smoking (0=Current, 1=Former, 2=Never) <input type="number" min="0" max="2" value={heartInputs.smokingStatus} onChange={(e) => setHeartInputs({...heartInputs, smokingStatus: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Alcohol (units/week) <input type="number" value={heartInputs.alcoholConsumption} onChange={(e) => setHeartInputs({...heartInputs, alcoholConsumption: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Physical Activity (0=High, 1=Low, 2=Mod) <input type="number" min="0" max="2" value={heartInputs.physicalActivityLevel} onChange={(e) => setHeartInputs({...heartInputs, physicalActivityLevel: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Diet Quality Score (0-100) <input type="number" value={heartInputs.dietQualityScore} onChange={(e) => setHeartInputs({...heartInputs, dietQualityScore: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Sleep Hours <input type="number" step="0.5" value={heartInputs.sleepHours} onChange={(e) => setHeartInputs({...heartInputs, sleepHours: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>BMI <input type="number" step="0.1" value={heartInputs.bmi} onChange={(e) => setHeartInputs({...heartInputs, bmi: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Diabetes (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.diabetes} onChange={(e) => setHeartInputs({...heartInputs, diabetes: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Hypertension (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.hypertension} onChange={(e) => setHeartInputs({...heartInputs, hypertension: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Family History (0=No, 1=Yes) <input type="number" min="0" max="1" value={heartInputs.familyHistory} onChange={(e) => setHeartInputs({...heartInputs, familyHistory: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Risk Score (0-100) <input type="number" value={heartInputs.riskScore} onChange={(e) => setHeartInputs({...heartInputs, riskScore: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
         </div>
 
         <button style={buttonStyle} onClick={predictHeart}>🔮 Predict Heart Disease</button>
@@ -391,12 +391,12 @@ function MLTest() {
         </div>
 
         <div style={inputContainerStyle}>
-          <label style={labelStyle}>Buying (0-4) <input type="number" value={carInputs.buying} onChange={(e) => setCarInputs({...carInputs, buying: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Maintenance (0-4) <input type="number" value={carInputs.maint} onChange={(e) => setCarInputs({...carInputs, maint: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Doors <input type="number" value={carInputs.doors} onChange={(e) => setCarInputs({...carInputs, doors: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Persons <input type="number" value={carInputs.persons} onChange={(e) => setCarInputs({...carInputs, persons: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Luggage Boot <input type="number" value={carInputs.lug_boot} onChange={(e) => setCarInputs({...carInputs, lug_boot: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
-          <label style={labelStyle}>Safety <input type="number" value={carInputs.safety} onChange={(e) => setCarInputs({...carInputs, safety: parseFloat(e.target.value) || 0})} style={inputStyle} /></label>
+          <label style={labelStyle}>Buying (0-4) <input type="number" value={carInputs.buying} onChange={(e) => setCarInputs({...carInputs, buying: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Maintenance (0-4) <input type="number" value={carInputs.maint} onChange={(e) => setCarInputs({...carInputs, maint: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Doors <input type="number" value={carInputs.doors} onChange={(e) => setCarInputs({...carInputs, doors: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Persons <input type="number" value={carInputs.persons} onChange={(e) => setCarInputs({...carInputs, persons: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Luggage Boot <input type="number" value={carInputs.lug_boot} onChange={(e) => setCarInputs({...carInputs, lug_boot: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
+          <label style={labelStyle}>Safety <input type="number" value={carInputs.safety} onChange={(e) => setCarInputs({...carInputs, safety: e.target.value === "" ? "" : parseFloat(e.target.value)})} style={inputStyle} /></label>
         </div>
 
         <button style={buttonStyle} onClick={predictCar}>🔮 Evaluate Car</button>
