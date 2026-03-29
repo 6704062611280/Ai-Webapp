@@ -202,7 +202,7 @@ function NNTest() {
     padding: "12px 28px",
     fontSize: "16px",
     fontWeight: "600",
-    backgroundColor: "#9C27B0",
+    backgroundColor: "#007bff",
     color: "white",
     border: "none",
     borderRadius: "5px",
@@ -223,8 +223,8 @@ function NNTest() {
   };
 
   const resultCardStyle = {
-    backgroundColor: "#f3e5f5",
-    border: "2px solid #9C27B0",
+    backgroundColor: "#f0f6ff",
+    border: "2px solid #007bff",
     borderRadius: "8px",
     padding: "20px",
     marginTop: "20px"
@@ -320,16 +320,16 @@ function NNTest() {
         {heartError && <div style={errorStyle}>{heartError}</div>}
         {Object.keys(heartResult).length > 0 && (
           <div style={resultCardStyle}>
-            <h3 style={{ marginTop: 0, color: "#9C27B0" }}>Neural Network Results</h3>
+            <h3 style={{ marginTop: 0, color: "#dc3545" }}>Results</h3>
             <table style={resultTableStyle}>
               <tbody>
                 <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, fontWeight: "600"}}>Prediction</td>
-                  <td style={{...resultCellStyle, color: "#9C27B0", fontWeight: "bold"}}>{heartResult.result}</td>
+                  <td style={{...resultCellStyle, fontWeight: "600"}}>NN</td>
+                  <td style={{...resultCellStyle, color: "#dc3545", fontWeight: "bold"}}>{heartResult.result}</td>
                 </tr>
                 <tr style={resultRowStyle}>
                   <td style={{...resultCellStyle, fontWeight: "600"}}>Confidence</td>
-                  <td style={{...resultCellStyle, fontSize: "13px"}}>{heartResult.accuracy?.toFixed(1)}%</td>
+                  <td style={{...resultCellStyle, fontSize: "13px"}}>Accuracy: {heartResult.accuracy?.toFixed(1)}%</td>
                 </tr>
               </tbody>
             </table>
@@ -383,12 +383,12 @@ function NNTest() {
             <table style={resultTableStyle}>
               <tbody>
                 <tr style={resultRowStyle}>
-                  <td style={{...resultCellStyle, fontWeight: "600"}}>Evaluation</td>
+                  <td style={{...resultCellStyle, fontWeight: "600"}}>NN</td>
                   <td style={{...resultCellStyle, color: "#007bff", fontWeight: "bold"}}>{carResult.result}</td>
                 </tr>
                 <tr style={resultRowStyle}>
                   <td style={{...resultCellStyle, fontWeight: "600"}}>Confidence</td>
-                  <td style={{...resultCellStyle, fontSize: "13px"}}>{carResult.accuracy?.toFixed(1)}%</td>
+                  <td style={{...resultCellStyle, fontSize: "13px"}}>Accuracy: {carResult.accuracy?.toFixed(1)}%</td>
                 </tr>
               </tbody>
             </table>
