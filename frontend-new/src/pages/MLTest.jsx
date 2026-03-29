@@ -108,11 +108,11 @@ function MLTest() {
 
   // Car Evaluation Example Presets
   const carBadExample = () => {
-    setCarInputs({ buying: 4, maint: 4, doors: 2, persons: 2, lug_boot: 1, safety: 1 });
+    setCarInputs({ buying: 1, maint: 1, doors: 2, persons: 2, lug_boot: 1, safety: 1 });
   };
 
   const carGoodExample = () => {
-    setCarInputs({ buying: 1, maint: 1, doors: 4, persons: 5, lug_boot: 3, safety: 3 });
+    setCarInputs({ buying: 4, maint: 4, doors: 4, persons: 5, lug_boot: 3, safety: 3 });
   };
 
   const carModerateExample = () => {
